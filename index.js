@@ -1,5 +1,7 @@
 const express = require("express");
 const mongoConnect = require("./db/connections");
+const errorHandlingMiddleware = require("./middleware/errorHandling.middleware");
+
 
 const app = express();
 
@@ -10,6 +12,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // // Routes will always go here
 // app.use("/", require("./routes/urls"));
+
+// Error handling middleware
+app.use(errorHandlingMiddleware);
 
 
 // Connect to MongoDB Database
