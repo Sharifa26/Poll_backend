@@ -10,8 +10,8 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-// // Routes will always go here
-// app.use("/", require("./routes/urls"));
+// Routes will always go here
+app.use("/", require("./routes/urls"));
 
 // Error handling middleware
 app.use(errorHandlingMiddleware);
