@@ -24,6 +24,10 @@ const Schema = new mongoose.Schema({
     },
     polls_voted: {
         type: Array,
+        default: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Poll', // Reference to the 'Poll' model
+        }] // Array of { poll_id }
     },
     is_active: {
         type: Boolean,
