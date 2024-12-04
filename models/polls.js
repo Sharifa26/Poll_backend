@@ -7,7 +7,10 @@ const Schema = new mongoose.Schema({
     options: {
         type: Array, // Array of { text, votes }
         required: true,
-        default: []
+        default: [{ 
+            text: String, 
+            votes: { type: Number, default: 0 } 
+        }]
     },
     expiration_date: {
         type: Date
