@@ -12,10 +12,8 @@ const create = (request, response, next) => {
                 age: request.body.age,
                 gender: request.body.gender,
                 location: request.body.location,
-                is_admin: request.body.isAdmin,
-                polls_voted: request.body.pollsVoted,
-                is_active: request.body.isActive,
-                is_deleted: request.body.isDeleted
+                is_admin: request.body.is_admin,
+                polls_voted: request.body.polls_voted
             }
 
             const usersData = await Users.findOne({ username: request.body.username })
@@ -35,16 +33,6 @@ const create = (request, response, next) => {
         }
     })
 }
-const u = {
-    "username": "sharifa",
-    "password": "sharifa",
-    "age": 23,
-    "gender": "female",
-    "location": "bangalore",
-    "is_admin": true,
-    "polls_voted": [1, 2, 3],
-    "is_active": true,    
-    "is_deleted": false 
-}
+
 module.exports = { create }
 

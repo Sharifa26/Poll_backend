@@ -24,7 +24,6 @@ const Schema = new mongoose.Schema({
     },
     polls_voted: {
         type: Array,
-        default: [] // Array of poll IDs
     },
     is_active: {
         type: Boolean,
