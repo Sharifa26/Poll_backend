@@ -4,14 +4,17 @@ const Schema = new mongoose.Schema({
         type: String,
         required: true
     },
-    options: {
-        type: Array, // Array of { text, votes }
-        required: true,
-        default: [{ 
-            text: String, 
-            votes: { type: Number, default: 0 } 
-        }]
-    },
+    options: [
+        {
+            text: {
+                type: String,
+            },
+            votes: {
+                type: Number,
+                default: 0
+            },
+        },
+    ],
     expiration_date: {
         type: Date
     },

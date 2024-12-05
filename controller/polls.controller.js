@@ -1,8 +1,7 @@
-const Polls = require('../models/polls');
 const InvalidParamException = require('../exceptions/invalid.param.exception');
 const InvalidRequestException = require('../exceptions/invalid-request');
-const { options } = require('../routes/urls');
-
+const Polls = require('../models/polls');
+const Users = require('../models/users');
 
 // Create a new poll
 const createPoll = (request, response, next) => {
@@ -80,20 +79,56 @@ const getAllPollsByUser = (request, response, next) => {
 const pollsVoting = (request, response, next) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const id = request.params.id;
-            const optionIndex = request.body.optionIndex;
-            const polls = await Polls.findById(id);
-            if (!polls) {
+            const Id = request.user.userId;
+            const pollId = request.params.id; // Poll ID from the request URL
+            const optionIndex = request.body.optionIndex; // Option index from the request body
+
+            // Validate the option index
+            if (optionIndex === undefined || optionIndex < 0) {
+                throw new InvalidRequestException('Invalid option index');
+            }
+
+            // Find the poll by ID
+            const poll = await Polls.findById(pollId);
+
+            if (!poll) {
                 throw new InvalidParamException('Poll not found');
             }
-            const voteData = await Polls.updateOne(
-                { _id: id, options: options[optionIndex]  },
-                { options: { votes: votes + 1 } } ,
-            );
+
+            //Ensure the poll is active
+            if (poll.is_deleted) {
+                throw new InvalidRequestException('This poll has been deleted');
+            }
+            if (!poll.is_active) {
+                throw new InvalidRequestException('This poll is no longer active');
+            }
+
+            // Ensure the optionIndex is valid
+            if (optionIndex >= poll.options.length) {
+                throw new InvalidRequestException('Invalid option index');
+            }
+
+            // Check if the user has already voted on this poll
+            const user = await Users.findById(Id);
+
+            if (user.polls_voted.includes(pollId)) {
+                throw new InvalidRequestException('You have already voted on this poll');
+            }
+
+            // Increment the votes for the selected option
+            poll.options[optionIndex].votes += 1;
+
+            // Save the updated poll
+            await poll.save();
+
+            // Update the user's polls_voted field
+            user.polls_voted.push(pollId);
+            await user.save();
+
             resolve(
                 response.json({
                     success: true,
-                    message: 'voted successfully'
+                    message: 'Voted successfully'
                 })
             );
         } catch (error) {
@@ -101,5 +136,6 @@ const pollsVoting = (request, response, next) => {
         }
     });
 };
+
 
 module.exports = { createPoll, getAllPolls, getAllPollsByUser, pollsVoting };
