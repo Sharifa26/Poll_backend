@@ -22,13 +22,12 @@ const Schema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    polls_voted: {
-        type: Array,
-        default: [{
+    polls_voted: [
+        {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Poll', // Reference to the 'Poll' model
-        }] // Array of { poll_id }
-    },
+            ref: 'polls', // Reference to the 'polls' model
+        },
+    ],
     is_active: {
         type: Boolean,
         default: true
