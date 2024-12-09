@@ -7,6 +7,18 @@ const cors = require("cors");
 
 const app = express();
 
+// CORS Options
+const corsOptions = {
+  origin: 'https://expert-pancake-jp47xpp4g4jc574g-3001.app.github.dev',  // Allow your frontend domain
+  methods: ['GET', 'POST', 'OPTIONS'],  // Allowed HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+  credentials: true, // Allow cookies or credentials to be sent
+  optionsSuccessStatus: 200, // Success status for OPTIONS request
+};
+
+// Use CORS middleware with the configured options
+app.use(cors(corsOptions));
+
 //body parser
 app.use(express.json());
 
@@ -17,18 +29,6 @@ app.use("/", require("./routes/urls"));
 
 // Error handling middleware
 app.use(errorHandlingMiddleware);
-
-// Enable CORS for the frontend URL
-const corsOptions ={
-  origin: '*', // Allow the specific frontend URL
-  credentials: true,             // Allow credentials like cookies, authorization headers, etc.
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // Allowed methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
-  optionsSuccessStatus: 204      // Status code for successful OPTIONS requests
-}
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));  // Allow preflight requests for all routes
-
 
 
 // Connect to MongoDB Database
