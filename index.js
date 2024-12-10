@@ -9,7 +9,7 @@ const app = express();
 
 // CORS Options
 const corsOptions = {
-  origin: 'https://expert-pancake-jp47xpp4g4jc574g-3001.app.github.dev',  // Allow your frontend domain
+  origin: 'https://expert-pancake-jp47xpp4g4jc574g-3000.app.github.dev',  // Allow your frontend domain
   methods: ['GET', 'POST', 'OPTIONS'],  // Allowed HTTP methods
   allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
   credentials: true, // Allow cookies or credentials to be sent
