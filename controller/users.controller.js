@@ -115,5 +115,40 @@ const getUser = (request, response, next) => {
     });
 };
 
-module.exports = { register, login, authenticate, getUser };
+
+const updateUser = async (request, response, next) => {
+    try {
+        const { username, age, gender, location } = request.body;
+
+        // Find the user by ID or username (you can adapt this based on your requirements)
+        const userId = request.params.id; // Assuming user ID is passed as a URL parameter
+        const user = await Users.findById(userId);
+
+        if (!user) {
+            throw new InvalidRequestException('User not found');
+        }
+
+        // Prepare update data object
+        const updateData = {};
+        if (username) updateData.username = username;
+        if (age) updateData.age = age;
+        if (gender) updateData.gender = gender;
+        if (location) updateData.location = location;
+
+
+        // Update user details in the database
+        const updatedUser = await Users.findByIdAndUpdate(userId, updateData, { new: true });
+
+        response.json({
+            success: true,
+            message: 'User updated successfully',
+            result: updatedUser
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+module.exports = { register, login, authenticate, getUser, updateUser };
 
