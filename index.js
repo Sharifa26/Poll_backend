@@ -10,7 +10,7 @@ const app = express();
 // CORS Options
 const corsOptions = {
   origin: process.env.FRONT_URL,  // Allow your frontend domain
-  methods: ['GET', 'POST', 'OPTIONS', 'PUT'],  // Allowed HTTP methods
+  methods: ['GET', 'POST', 'OPTIONS', 'PUT','DELETE'], // Allowed methods
   allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
   credentials: true, // Allow cookies or credentials to be sent
   optionsSuccessStatus: 200, // Success status for OPTIONS request

@@ -115,7 +115,7 @@ const getUser = (request, response, next) => {
     });
 };
 
-
+// Update user
 const updateUser = async (request, response, next) => {
     try {
         const { username, age, gender, location } = request.body;
@@ -149,6 +149,5 @@ const updateUser = async (request, response, next) => {
     }
 };
 
-
-module.exports = { register, login, authenticate, getUser, updateUser };
+module.exports = { register, login, authenticate, getUser, updateUser};
 
