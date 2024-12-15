@@ -171,4 +171,7 @@ curl --location 'https://localhost:2500/polls/:id/vote' \
 
 <p>Thank you for your contributions! 🙌</p>
 
+<p align="center">Made with ❤️ by Sharifa26</p>
+
+
 
