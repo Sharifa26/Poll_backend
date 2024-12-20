@@ -2,6 +2,8 @@ const express = require("express");
 const mongoConnect = require("./db/connections");
 const errorHandlingMiddleware = require("./middleware/errorHandling.middleware");
 const cors = require("cors");
+const dotenv = require('dotenv');
+dotenv.config();
 
 
 
